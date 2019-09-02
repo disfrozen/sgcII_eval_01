@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>PSU/NEM</title>
+    <link rel="stylesheet" type="text/css" href="estilo.css">
+</head>
+
+<body>
+
+    <nav>
+        <a href="index.html">Revista UTE</a> <a href="icvu-2019.html">ICVU 2019</a> <a href="psu-nem.html" class="actual">PSU/NEM</a> <a href="better-times.html">DESEMPLEO</a> <a href="global-warming.html">CALENTAMIENTO GLOBAL</a>
+    </nav>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/addons/p5.dom.min.js"></script>
+
+    <script>
+        var selector;
+        var data, x;
+        let y;
+
+        function preload(){
+          data = loadTable('https://raw.githubusercontent.com/disfrozen/sgcII_eval_01/gh-pages/psu-nem-2016.tsv', 'tsv', 'header')
+        }
+
+        function setup() {
+            createCanvas(windowWidth, windowHeight);
+            noStroke();
+            noLoop();
+            selector = createSelect();
+            selector.position(width-190, 20);
+            selector.option('Administración municipal', 0);
+            selector.option('Particular subvencionada', 1);
+            selector.option('Particular pagada', 2);
+            selector.changed(cleanup);
+            stroke(1);
+
+            for (x = 800; x >= 100; x -= 100) {
+              text(x, 400, (height - x) - 50);
+            }
+            for (y = 1.0; y <= 7.0; y += 1.0) {
+              text(y + '.0', 450 + (y * 160), height - 100);
+            }
+
+          }
+
+
+          function draw() {
+
+            var opcion = selector.value();
+            if (opcion == 0) {
+
+
+              for (var k = 0; k < 131; k++) {
+
+                if (data.get(k, 2) == 'Municipal') {
+                  //  console.log(data.get(k,4));
+                  if (data.get(k, 3) > 500 && data.get(k, 4) > 5.0) {
+                    console.log(data.get(k, 4));
+                    console.log(data.get(k, 3));
+                    noStroke();
+                    fill('rgba(0,255,0, 0.25)');
+                    ellipse(data.get(k, 4) * 160 + 450, height - (data.get(k, 3)) - 50, 10, 10);
+                    noFill();
+
+                  } else if (data.get(k, 3) < 450) {
+                    fill('rgba(255,0,0, 0.25)');
+                    ellipse(data.get(k, 4) * 160 + 450, height - (data.get(k, 3)) - 50, 10, 10);
+                  } else {
+                    fill('rgba(0,0,0, 0.25)');
+                    ellipse(data.get(k, 4) * 160 + 450, height - (data.get(k, 3)) - 50, 10, 10);
+
+                  }
+
+                }
+              }
+
+
+
+
+
+      } else if (opcion == 1) {
+
+          for (var k = 0; k < 131; k++) {
+
+            if (data.get(k, 2) == 'Particular Subvencionado') {
+              //  console.log(data.get(k,4));
+              if (data.get(k, 3) > 500 && data.get(k, 4) > 5.0) {
+                console.log(data.get(k, 4));
+                console.log(data.get(k, 3));
+                noStroke();
+                fill('rgba(0,255,0, 0.25)');
+                ellipse(data.get(k, 4) * 160 + 450, height - (data.get(k, 3)) - 50, 10, 10);
+
+              } else if (data.get(k, 3) < 450) {
+                fill('rgba(255,0,0, 0.25)');
+                ellipse(data.get(k, 4) * 160 + 450, height - (data.get(k, 3)) - 50, 10, 10);
+              } else {
+                fill('rgba(0,0,0, 0.25)');
+                ellipse(data.get(k, 4) * 160 + 450, height - (data.get(k, 3)) - 50, 10, 10);
+
+              }
+
+            }
+          }
+        } else {
+            for (var k = 0; k < 131; k++) {
+
+            if (data.get(k, 2) == 'Particular Pagado') {
+              //  console.log(data.get(k,4));
+              if (data.get(k, 3) > 500 && data.get(k, 4) > 5.0) {
+                console.log(data.get(k, 4));
+                console.log(data.get(k, 3));
+                noStroke();
+                fill('rgba(0,255,0, 0.25)');
+                ellipse(data.get(k, 4) * 160 + 450, height - (data.get(k, 3)) - 50, 10, 10);
+
+              } else if (data.get(k, 3) < 450) {
+                fill('rgba(255,0,0, 0.25)');
+                ellipse(data.get(k, 4) * 160 + 450, height - (data.get(k, 3)) - 50, 10, 10);
+              } else {
+                fill('rgba(0,0,0, 0.25)');
+                ellipse(data.get(k, 4) * 160 + 450, height - (data.get(k, 3)) - 50, 10, 10);
+
+              }
+
+            }
+          }
+
+        }
+
+  }
+
+        function cleanup(){
+          clear();
+          redraw();
+          stroke(0);
+          noFill();
+          for (var x = 800; x >= 100; x -= 100) {
+            text(x, 400, (height - x) - 50);
+          }
+          for (var y = 1.0; y <= 7.0; y += 1.0) {
+            text(y + '.0', 450 + (y * 160), height - 100);
+          }
+        }
+
+    </script>
+
+</body>
+
+</html>
